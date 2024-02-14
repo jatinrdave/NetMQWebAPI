@@ -9,12 +9,12 @@ namespace Controllers
     [Route("[controller]")]
     public class NetMQController : ControllerBase
     {
-        private readonly IWindowmakerService _windowmakerService;
+        private readonly ICalcService _calcService;
         private readonly ILogger<NetMQController> _logger;
 
-        public NetMQController(IWindowmakerService windowmakerService, ILogger<NetMQController> logger)
+        public NetMQController(ICalcService calcService, ILogger<NetMQController> logger)
         {
-            _windowmakerService = windowmakerService;
+            _calcService = calcService;
             _logger = logger;
         }
 
@@ -25,7 +25,7 @@ namespace Controllers
             double value = 0;
             try
             {
-                var calculationRequestOutput = await _windowmakerService.InvokeCalculate(calculationRequestInput, AppSettings.OrganisationId, AppSettings.TenantID);
+                var calculationRequestOutput = await _calcService.InvokeCalculate(calculationRequestInput, AppSettings.OrganisationId, AppSettings.TenantID);
 
                 return Ok(calculationRequestOutput);
             }

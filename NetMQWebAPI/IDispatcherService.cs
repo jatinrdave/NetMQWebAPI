@@ -5,6 +5,6 @@ namespace WebApplication1
     public interface IDispatcherService
     {
         void Initialize(string tcpPort);
-        Task<string> InvokeWindowmakerService(string messageInput);
+        Task<string> InvokeService(string messageInput);
     }
 }

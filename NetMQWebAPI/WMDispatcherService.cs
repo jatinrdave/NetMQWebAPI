@@ -25,7 +25,7 @@ namespace WebApplication1
             this.tcpPort = tcpPort;
         }
 
-        public async Task<string> InvokeWindowmakerService(string messageString)
+        public async Task<string> InvokeService(string messageString)
         {
             ResponseMessage responseMessage = new ResponseMessage() { message = string.Empty };
 

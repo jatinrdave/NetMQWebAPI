@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebApplication1
 {
-    public interface IWindowmakerService
+    public interface ICalcService
     {
         Task<string> InvokeCalculate(CalculationRequestInput calculationRequestInput, int organization, int tenantID);
        

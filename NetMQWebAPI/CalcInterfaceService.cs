@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace WebApplication1
 {
-    public class WindowmakerInterfaceService : APIBaseService, IWindowmakerService
+    public class CalcInterfaceService : APIBaseService, ICalcService
     {
         private ConcurrentDictionary<int, IDispatcherService> _serviceDictionary = new ConcurrentDictionary<int, IDispatcherService>();
 
-        public WindowmakerInterfaceService()
+        public CalcInterfaceService()
         {
         }
 
@@ -47,12 +47,12 @@ namespace WebApplication1
 
             try
             {
-                IDispatcherService windowmakerAsService = GetService(organization, tenantID);
+                IDispatcherService dispatcherService = GetService(organization, tenantID);
 
                 WMServices.Core.Message message = new WMServices.Core.Message() { MethodID = EMethodID.Calculate, Data = calculationRequestInput.CalculationInput };
                 string messageString = JsonConvert.SerializeObject(message, typeof(WMServices.Core.Message), settings);
                 //Call Calculation
-                result = await windowmakerAsService.InvokeWindowmakerService(messageString);
+                result = await dispatcherService.InvokeService(messageString);
                 _logger?.Info("Calculation Output: {0} at {1}", result, DateTime.Now.ToLongTimeString());
             }
             catch (Exception ex)
@@ -90,7 +90,7 @@ namespace WebApplication1
                 wmDispatcherService.Initialize(portNo.ToString());
                 _logger?.Info($"Initialise Service completed ");
                 _serviceDictionary.TryAdd(organization, wmDispatcherService);
-                _logger?.Info($"Windowmaker Service executable Spawn");
+                _logger?.Info($"Service executable Spawn");
             }
             _logger?.Info($"{GetType().ToString()}::{MethodBase.GetCurrentMethod().Name} - Out");
             return _serviceDictionary[organization];
@@ -107,7 +107,7 @@ namespace WebApplication1
             _logger?.Info($"{GetType().ToString()}::{MethodBase.GetCurrentMethod().Name} - In");
             _logger?.Info("First Run at {0}", DateTime.Now.ToLongTimeString());
             //Initialise only.
-            IDispatcherService windowmakerDispatcherService = GetService(organisationId, tenantID);
+            IDispatcherService dispatcherService = GetService(organisationId, tenantID);
         }
     }
 }
